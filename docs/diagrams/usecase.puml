@@ -1,0 +1,37 @@
+@startuml "Use Case Diagram"
+left to right direction
+
+actor "Администратор" as Admin
+actor "Студент" as Student
+
+rectangle "Система учета комнат и заселенных студентов" {
+  usecase "Вход в систему" as UC_Login
+  usecase "Выход из системы" as UC_Logout
+
+  usecase "Добавить комнату" as UC_AddRoom
+  usecase "Просмотреть комнаты" as UC_ViewRooms
+  usecase "Проверить\nсвободные места" as UC_CheckFree
+  usecase "Добавить студента" as UC_AddStudent
+  usecase "Найти студента" as UC_FindStudent
+  usecase "Заселить студента" as UC_CheckIn
+  usecase "Выселить студента" as UC_CheckOut
+
+  usecase "Просмотреть\nсвою комнату" as UC_MyRoom
+  usecase "Просмотреть соседей" as UC_Neighbors
+}
+
+Admin --> UC_Login
+Admin --> UC_Logout
+Admin --> UC_AddRoom
+Admin --> UC_ViewRooms
+Admin --> UC_CheckFree
+Admin --> UC_AddStudent
+Admin --> UC_FindStudent
+Admin --> UC_CheckIn
+Admin --> UC_CheckOut
+
+Student --> UC_Login
+Student --> UC_Logout
+Student --> UC_MyRoom
+Student --> UC_Neighbors
+@enduml
