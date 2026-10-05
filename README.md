@@ -31,16 +31,28 @@ Residio — консольное приложение для учёта комн
 ## Структура проекта
  
 ```text
-Dormio/
+Residio/
 │
-├── docs/                       # Документация проекта
-│   └── diagrams/               # Диаграммы PlantUML
-│
-├── src/                        # Исходный код приложения
-│   └── main.py                 # Точка входа в приложение
-│
-├── .gitignore                  # Исключения для Git
-└── README.md                   # Документация проекта
+├── docs/                         # Документация проекта
+│   └── diagrams/                 # Диаграммы PlantUML
+│        ├── check-in.png         # Изобрадение диаграммы заселения 
+|        ├── check-in.puml        # PlantUML заселение
+|        ├── check-out.png        # Изобрадение диаграммы высления
+|        ├── check-out.puml       # PlantUML высление
+|        ├── free-place.png       # Изобрадение диаграммы проверки свободных мест
+|        ├── Use Case Diagram.png # Изобрадение UseCase диаграммы
+|        └── usecase.puml         # PlantUML UseCase диаграммы   
+|
+├── src/                          # Исходный код приложения
+│   └── residio/
+|        ├── __init__.py          # Инициализация Python-пакета
+|        └── main.py              # Точка входа в программу
+├── tests/                        # Автоматизированные тесты
+|    ├── __init__.py
+|    └── test_main.py
+├── .gitignore                    # Исключения для Git
+├── requirements.txt              # Список зависимостей проекта
+└── README.md                     # Документация проекта
 ```
 
 ## Архитектура
@@ -95,7 +107,7 @@ Data Layer (хранение данных в файлах)
  
 ```bash
 git clone https://github.com/klimovvasko-stack/Residio.git
-cd Dormio
+cd Residio
 ```
  
 ## Запуск приложения
