@@ -76,13 +76,13 @@ Data Layer (хранение данных в файлах)
 Высление студента 
 
 
-![Выселение студента](docs\diagrams\check-out.png)
+![Выселение студента](docs/diagrams/check-out.png)
 
 
 Проверка свободныз мест
 
 
-![Проверка свободных мест](docs\diagrams\free-place.png)
+![Проверка свободных мест](docs/diagrams/free-place.png)
 
 
 ## Требования
