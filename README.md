@@ -76,7 +76,7 @@ Data Layer (хранение данных в файлах)
 ## Установка
  
 ```bash
-git clone <repository-url>
+git clone https://github.com/klimovvasko-stack/Residio.git
 cd Dormio
 ```
  
