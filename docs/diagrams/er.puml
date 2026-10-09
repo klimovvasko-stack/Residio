@@ -1,0 +1,39 @@
+@startuml er
+hide circles
+skinparam linetype ortho
+
+entity "user_roles" as user_roles {
+  *user_role_id : INTEGER <<PK>>
+  --
+  *name : TEXT
+}
+
+entity "users" as users {
+  *user_id : INTEGER <<PK>>
+  --
+  *login : TEXT
+  *password : TEXT
+  *user_role : INTEGER <<FK>>
+}
+
+entity "rooms" as rooms {
+  *room_id : INTEGER <<PK>>
+  --
+  *number : INTEGER
+  *floor : INTEGER
+  *capacity : INTEGER
+}
+
+entity "students" as students {
+  *student_id : INTEGER <<PK>>
+  --
+  *full_name : TEXT
+  *group_name : TEXT
+  room_id : INTEGER <<FK>>
+  *user_id : INTEGER <<FK>>
+}
+
+user_roles ||--o{ users : "1:N"
+rooms |o--o{ students : "1:N"
+users ||--|| students : "1:1"
+@enduml
