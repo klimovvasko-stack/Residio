@@ -1,11 +1,12 @@
 import sqlite3
 from pathlib import Path
 
+# настройка пути
 BASE_DIR = Path(__file__).parent
 SCHEMA_PATH = BASE_DIR / "schema.sql"
 DB_PATH = BASE_DIR / "residio.db"
 
-
+# выполняет все команды из schema.sql
 def init_db():
     with open(SCHEMA_PATH, encoding="utf-8") as f:
         script = f.read()
@@ -17,7 +18,7 @@ def init_db():
     finally:
         conn.close()
 
-
+# выводит на экран все строчки 
 def show_table(name):
     conn = sqlite3.connect(DB_PATH)
     try:
@@ -31,8 +32,8 @@ def show_table(name):
 
 
 if __name__ == "__main__":
-    init_db()
-    for table in ("user_roles", "rooms", "users", "students"):
+    init_db() # создает и заполняет бд 
+    for table in ("user_roles", "rooms", "users", "students"): 
         show_table(table)
 
 # python init_db.py

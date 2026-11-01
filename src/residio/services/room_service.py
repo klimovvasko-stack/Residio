@@ -25,7 +25,7 @@ def is_room_available(room_id: int) -> bool:
 
 
 def get_available_rooms() -> list[tuple[Room, int]]:
-    """Возвращает список (комната, кол-во проживающих) только для комнат со свободными местами."""
+    # Возвращает список только для комнат со свободными местами
     result = []
     for room in room_repository.get_all():
         occupied = get_room_occupancy(room.room_id)

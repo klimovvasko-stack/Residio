@@ -1,10 +1,11 @@
 import sqlite3
-from pathlib import Path
+from pathlib import Path # библиотека для вычисления где находится текущий файл
 
 # База всегда будет создаваться и открываться в папке residio
 BASE_DIR = Path(__file__).resolve().parent.parent
 DB_PATH = BASE_DIR / "residio.db"
 
+# SQL инфструкции для создание структуры 
 SCHEMA_SQL = """
 PRAGMA foreign_keys = ON;
 
@@ -69,12 +70,12 @@ INSERT INTO students (full_name, group_name, room_id, user_id) VALUES
     ('Волкова Елена Дмитриевна', 'ИВТ-102', NULL, 7);
 """
 
-
+# подключается к файлу бд и возвращает соединение в репозиторий 
 def get_connection():
-    conn = sqlite3.connect(DB_PATH)
-    conn.execute("PRAGMA foreign_keys = ON;")
+    conn = sqlite3.connect(DB_PATH) # соединение с residio.bd
+    conn.execute("PRAGMA foreign_keys = ON;") # включение проверки внешних ключей 
 
-    # Проверяем, есть ли в базе таблица users. Если нет — создаём и заполняем!
+    # Проверяем, есть ли в базе таблица users, в ином случае создаем и заполняем
     cur = conn.cursor()
     cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='users';")
     if cur.fetchone() is None:

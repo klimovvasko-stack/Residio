@@ -21,7 +21,7 @@ def get_all() -> list[Student]:
     conn.close()
     return [_map(r) for r in rows]
 
-
+# функция позволяет программе находить профиль студента по student_id 
 def get_by_id(student_id: int) -> Student | None:
     conn = get_connection()
     cur = conn.cursor()
@@ -37,7 +37,7 @@ def get_by_id(student_id: int) -> Student | None:
     conn.close()
     return _map(row) if row else None
 
-
+# функция позволяет программе находить профиль студента по user_id 
 def get_by_user_id(user_id: int) -> Student | None:
     conn = get_connection()
     cur = conn.cursor()
@@ -53,7 +53,7 @@ def get_by_user_id(user_id: int) -> Student | None:
     conn.close()
     return _map(row) if row else None
 
-
+# возвращает список студентов проживаюших в определенной комнате 
 def get_by_room_id(room_id: int) -> list[Student]:
     conn = get_connection()
     cur = conn.cursor()
@@ -70,7 +70,7 @@ def get_by_room_id(room_id: int) -> list[Student]:
     conn.close()
     return [_map(r) for r in rows]
 
-
+# создает новую записб о студенте
 def create(full_name: str, group_name: str, room_id: int | None, user_id: int) -> int:
     conn = get_connection()
     cur = conn.cursor()
@@ -83,7 +83,7 @@ def create(full_name: str, group_name: str, room_id: int | None, user_id: int) -
     conn.close()
     return student_id
 
-
+# меняет ФИО и группу студента 
 def update(student_id: int, full_name: str, group_name: str):
     conn = get_connection()
     cur = conn.cursor()
@@ -95,7 +95,7 @@ def update(student_id: int, full_name: str, group_name: str):
     conn.commit()
     conn.close()
 
-
+# меняет привязку к комнате 
 def update_room(student_id: int, room_id: int | None):
     conn = get_connection()
     cur = conn.cursor()
@@ -107,7 +107,7 @@ def update_room(student_id: int, room_id: int | None):
     conn.commit()
     conn.close()
 
-
+# удаление студента 
 def delete(student_id: int):
     conn = get_connection()
     cur = conn.cursor()

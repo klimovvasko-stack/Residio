@@ -4,7 +4,7 @@ from repositories import user_repository, student_repository
 ADMIN_ROLE_ID = 1
 STUDENT_ROLE_ID = 2
 
-
+# проверяет данные для входа 
 def authenticate(login: str, password: str) -> User | None:
     login = login.strip()
     password = password.strip()
@@ -12,13 +12,13 @@ def authenticate(login: str, password: str) -> User | None:
     if not login or not password:
         return None
 
-    user = user_repository.get_by_login(login)
+    user = user_repository.get_by_login(login) # поиск пользователей в базе 
     if not user or user.password != password:
         return None
 
     return user
 
-
+# управляет процессом регистрации студента 
 def register_student(
     login: str,
     password: str,
@@ -39,16 +39,16 @@ def register_student(
     if not group_name:
         raise Exception("Название группы не может быть пустым")
 
-    if user_repository.get_by_login(login):
+    if user_repository.get_by_login(login): # проверка дубликата 
         raise Exception(f"Пользователь с логином '{login}' уже существует")
 
-    # Сначала создаём аккаунт пользователя с ролью Student (2)
+    # Сначала создаём аккаунт пользователя с ролью Student 
     user_id = user_repository.create(login, password, STUDENT_ROLE_ID)
-    # Затем создаём профиль студента (пока без комнаты: room_id = None)
+    # Создаём профиль студента без комнаты
     student_id = student_repository.create(full_name, group_name, None, user_id)
     return student_id
 
-
+# создание новых администраторов 
 def create_admin(login: str, password: str) -> int:
     login = login.strip()
     password = password.strip()

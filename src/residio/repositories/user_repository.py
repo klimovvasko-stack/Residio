@@ -5,7 +5,7 @@ from models.user import User
 def _map(row) -> User:
     return User(*row)
 
-
+# получение списка всех пользователей системы 
 def get_all() -> list[User]:
     conn = get_connection()
     cur = conn.cursor()
@@ -19,7 +19,7 @@ def get_all() -> list[User]:
     conn.close()
     return [_map(r) for r in rows]
 
-
+# ищет учетную запись по id
 def get_by_id(user_id: int) -> User | None:
     conn = get_connection()
     cur = conn.cursor()
@@ -33,7 +33,7 @@ def get_by_id(user_id: int) -> User | None:
     conn.close()
     return _map(row) if row else None
 
-
+# поиск по авторизации
 def get_by_login(login: str) -> User | None:
     conn = get_connection()
     cur = conn.cursor()
@@ -47,7 +47,7 @@ def get_by_login(login: str) -> User | None:
     conn.close()
     return _map(row) if row else None
 
-
+# создает новую учетную запись 
 def create(login: str, password: str, user_role: int) -> int:
     conn = get_connection()
     cur = conn.cursor()
@@ -60,7 +60,7 @@ def create(login: str, password: str, user_role: int) -> int:
     conn.close()
     return user_id
 
-
+# удаляет учетную запись 
 def delete(user_id: int):
     conn = get_connection()
     cur = conn.cursor()
