@@ -1,11 +1,13 @@
 from models.user import User
 from services import room_service, student_service
 from ui.auth import add_admin, register_student
+from ui.utils import clear_screen, pause
 
 
 def admin_menu(user: User):
     while True:
-        print(f"\n===== Меню администратора ({user.login}) =====")
+        clear_screen()
+        print(f"===== Меню администратора ({user.login}) =====")
         print("1. Управление комнатами")
         print("2. Управление студентами и заселением")
         print("3. Добавить нового администратора")
@@ -17,16 +19,20 @@ def admin_menu(user: User):
         elif choice == "2":
             students_menu()
         elif choice == "3":
+            clear_screen()
             add_admin()
+            pause()
         elif choice == "0":
             break
         else:
             print("Неверная команда, попробуйте снова.")
+            pause()
 
 
 def rooms_menu():
     while True:
-        print("\n--- Управление комнатами ---")
+        clear_screen()
+        print("--- Управление комнатами ---")
         print("1. Список всех комнат")
         print("2. Список свободных комнат")
         print("3. Посмотреть жильцов комнаты")
@@ -36,6 +42,8 @@ def rooms_menu():
         print("0. Назад")
 
         choice = input("Выберите действие: ").strip()
+        if choice == "0":
+            break
 
         try:
             if choice == "1":
@@ -90,8 +98,6 @@ def rooms_menu():
                 room_service.delete_room(room_id)
                 print("Комната удалена!")
 
-            elif choice == "0":
-                break
             else:
                 print("Неверная команда.")
 
@@ -100,10 +106,13 @@ def rooms_menu():
         except Exception as e:
             print(f"Ошибка: {e}")
 
+        pause()
+
 
 def students_menu():
     while True:
-        print("\n--- Управление студентами ---")
+        clear_screen()
+        print("--- Управление студентами ---")
         print("1. Список всех студентов")
         print("2. Зарегистрировать нового студента")
         print("3. Заселить / переселить студента в комнату")
@@ -113,6 +122,8 @@ def students_menu():
         print("0. Назад")
 
         choice = input("Выберите действие: ").strip()
+        if choice == "0":
+            break
 
         try:
             if choice == "1":
@@ -151,8 +162,6 @@ def students_menu():
                 student_service.delete_student(student_id)
                 print("Студент и его учётная запись удалены.")
 
-            elif choice == "0":
-                break
             else:
                 print("Неверная команда.")
 
@@ -160,3 +169,5 @@ def students_menu():
             print("Ошибка: ID и номер комнаты должны быть числами!")
         except Exception as e:
             print(f"Ошибка: {e}")
+
+        pause()

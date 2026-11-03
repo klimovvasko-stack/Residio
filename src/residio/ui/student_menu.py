@@ -1,16 +1,20 @@
 from models.user import User
 from services import student_service, room_service
+from ui.utils import clear_screen, pause
 
 
 def student_menu(user: User):
     while True:
-        print(f"\n===== Личный кабинет студента ({user.login}) =====")
+        clear_screen()
+        print(f"===== Личный кабинет студента ({user.login}) =====")
         print("1. Мой профиль и комната")
         print("2. Мои соседи по комнате")
         print("3. Список свободных комнат в общежитии")
         print("0. Выход из аккаунта")
 
         choice = input("Выберите действие: ").strip()
+        if choice == "0":
+            break
 
         try:
             if choice == "1":
@@ -44,10 +48,10 @@ def student_menu(user: User):
                             f"свободно мест: {room.capacity - occupied} из {room.capacity}"
                         )
 
-            elif choice == "0":
-                break
             else:
                 print("Неверная команда.")
 
         except Exception as e:
             print(f"Ошибка: {e}")
+
+        pause()

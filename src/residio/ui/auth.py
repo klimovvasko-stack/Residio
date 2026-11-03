@@ -1,9 +1,11 @@
 from models.user import User
 from services import auth_service
+from ui.utils import clear_screen
 
 
 def login() -> User | None:
-    print("\n--- Вход в систему ---")
+    clear_screen()
+    print("--- Вход в систему ---")
     login_value = input("Логин: ")
     password_value = input("Пароль: ")
 
