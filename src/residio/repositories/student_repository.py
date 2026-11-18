@@ -1,5 +1,6 @@
 from database.database import get_connection
 from models.student import Student
+import sqlite3
 
 
 def _map(row) -> Student:
@@ -117,3 +118,42 @@ def delete(student_id: int):
     """, (student_id,))
     conn.commit()
     conn.close()
+
+# возвращает всех студентов со связанными комнатами в виде словарей для экспорта
+def get_all_for_export() -> list[dict]:
+    conn = get_connection()
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT
+            s.student_id,
+            s.full_name,
+            s.group_name,
+            s.user_id,
+            rm.room_id,
+            rm.number AS room_number,
+            rm.floor AS room_floor,
+            rm.capacity AS room_capacity
+        FROM students s
+        LEFT JOIN rooms rm ON s.room_id = rm.room_id
+        ORDER BY s.student_id
+    """)
+    rows = cur.fetchall()
+    conn.close()
+
+    result = []
+    for row in rows:
+        student_record = {
+            "student_id": row["student_id"],
+            "full_name": row["full_name"],
+            "group_name": row["group_name"],
+            "user_id": row["user_id"],
+            "room": {
+                "room_id": row["room_id"],
+                "number": row["room_number"],
+                "floor": row["room_floor"],
+                "capacity": row["room_capacity"],
+            } if row["room_id"] is not None else None,
+        }
+        result.append(student_record)
+    return result

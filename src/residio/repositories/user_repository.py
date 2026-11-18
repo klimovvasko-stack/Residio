@@ -2,6 +2,7 @@ from database.database import get_connection
 from models.user import User
 
 
+
 def _map(row) -> User:
     return User(*row)
 
@@ -70,3 +71,4 @@ def delete(user_id: int):
     """, (user_id,))
     conn.commit()
     conn.close()
+

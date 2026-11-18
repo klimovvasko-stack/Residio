@@ -1,5 +1,5 @@
 from models.user import User
-from services import room_service, student_service
+from services import room_service, student_service, export_service
 from ui.auth import add_admin, register_student
 from ui.utils import clear_screen, pause
 
@@ -11,6 +11,7 @@ def admin_menu(user: User):
         print("1. Управление комнатами")
         print("2. Управление студентами и заселением")
         print("3. Добавить нового администратора")
+        print("4. Экспорт данных (JSON, CSV, XML, YAML)")
         print("0. Выход из аккаунта")
 
         choice = input("Выберите действие: ").strip()
@@ -21,6 +22,11 @@ def admin_menu(user: User):
         elif choice == "3":
             clear_screen()
             add_admin()
+            pause()
+        elif choice == "4":
+            clear_screen()
+            out_path = export_service.export_students_data()
+            print(f"Данные успешно сохранены в папку:\n{out_path}")
             pause()
         elif choice == "0":
             break

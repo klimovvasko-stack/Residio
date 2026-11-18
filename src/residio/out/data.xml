@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<students>
+  <student>
+    <student_id>1</student_id>
+    <full_name>Иванов Иван Сергеевич</full_name>
+    <group_name>ИВТ-101</group_name>
+    <user_id>2</user_id>
+    <room>
+      <room_id>1</room_id>
+      <number>101</number>
+      <floor>1</floor>
+      <capacity>2</capacity>
+    </room>
+  </student>
+  <student>
+    <student_id>2</student_id>
+    <full_name>Смирнов Дмитрий Павлович</full_name>
+    <group_name>ИВТ-101</group_name>
+    <user_id>3</user_id>
+    <room />
+  </student>
+  <student>
+    <student_id>3</student_id>
+    <full_name>Петрова Анна Олеговна</full_name>
+    <group_name>ИВТ-102</group_name>
+    <user_id>4</user_id>
+    <room>
+      <room_id>3</room_id>
+      <number>201</number>
+      <floor>2</floor>
+      <capacity>2</capacity>
+    </room>
+  </student>
+  <student>
+    <student_id>4</student_id>
+    <full_name>Кузнецова Мария Игоревна</full_name>
+    <group_name>ИВТ-102</group_name>
+    <user_id>5</user_id>
+    <room>
+      <room_id>3</room_id>
+      <number>201</number>
+      <floor>2</floor>
+      <capacity>2</capacity>
+    </room>
+  </student>
+  <student>
+    <student_id>5</student_id>
+    <full_name>Сидоров Пётр Андреевич</full_name>
+    <group_name>ИВТ-103</group_name>
+    <user_id>6</user_id>
+    <room>
+      <room_id>2</room_id>
+      <number>102</number>
+      <floor>1</floor>
+      <capacity>3</capacity>
+    </room>
+  </student>
+  <student>
+    <student_id>7</student_id>
+    <full_name>Иванов Иван Иванович</full_name>
+    <group_name>ИВТ-4-2</group_name>
+    <user_id>8</user_id>
+    <room />
+  </student>
+  <student>
+    <student_id>11</student_id>
+    <full_name>Климов Василий Андреевич</full_name>
+    <group_name>26-ИВТ-4-2</group_name>
+    <user_id>12</user_id>
+    <room />
+  </student>
+  <student>
+    <student_id>13</student_id>
+    <full_name>asd</full_name>
+    <group_name>asd</group_name>
+    <user_id>16</user_id>
+    <room>
+      <room_id>1</room_id>
+      <number>101</number>
+      <floor>1</floor>
+      <capacity>2</capacity>
+    </room>
+  </student>
+</students>

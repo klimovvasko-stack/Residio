@@ -1,0 +1,60 @@
+- student_id: 1
+  full_name: Иванов Иван Сергеевич
+  group_name: ИВТ-101
+  user_id: 2
+  room:
+    room_id: 1
+    number: 101
+    floor: 1
+    capacity: 2
+- student_id: 2
+  full_name: Смирнов Дмитрий Павлович
+  group_name: ИВТ-101
+  user_id: 3
+  room: null
+- student_id: 3
+  full_name: Петрова Анна Олеговна
+  group_name: ИВТ-102
+  user_id: 4
+  room:
+    room_id: 3
+    number: 201
+    floor: 2
+    capacity: 2
+- student_id: 4
+  full_name: Кузнецова Мария Игоревна
+  group_name: ИВТ-102
+  user_id: 5
+  room:
+    room_id: 3
+    number: 201
+    floor: 2
+    capacity: 2
+- student_id: 5
+  full_name: Сидоров Пётр Андреевич
+  group_name: ИВТ-103
+  user_id: 6
+  room:
+    room_id: 2
+    number: 102
+    floor: 1
+    capacity: 3
+- student_id: 7
+  full_name: Иванов Иван Иванович
+  group_name: ИВТ-4-2
+  user_id: 8
+  room: null
+- student_id: 11
+  full_name: Климов Василий Андреевич
+  group_name: 26-ИВТ-4-2
+  user_id: 12
+  room: null
+- student_id: 13
+  full_name: asd
+  group_name: asd
+  user_id: 16
+  room:
+    room_id: 1
+    number: 101
+    floor: 1
+    capacity: 2
