@@ -71,7 +71,7 @@ INSERT INTO students (full_name, group_name, room_id, user_id) VALUES
 """
 
 # подключается к файлу бд и возвращает соединение в репозиторий 
-def get_connection():
+def open_connection():
     conn = sqlite3.connect(DB_PATH) # соединение с residio.bd
     conn.execute("PRAGMA foreign_keys = ON;") # включение проверки внешних ключей 
 

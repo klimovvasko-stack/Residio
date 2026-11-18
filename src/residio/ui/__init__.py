@@ -1,4 +1,3 @@
-from ui.utils import clear_screen, pause
+from ui.utils import clear_console, wait_for_enter
 
-__all__ = ["clear_screen", "pause"]
-
+__all__ = ["clear_console", "wait_for_enter"]

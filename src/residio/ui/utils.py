@@ -1,10 +1,9 @@
 import os
 
 
-def clear_screen():
+def clear_console():
     os.system("cls")
 
 
-def pause():
+def wait_for_enter():
     input("\nНажмите Enter, чтобы продолжить...")
-

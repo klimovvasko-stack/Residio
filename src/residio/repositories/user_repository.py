@@ -1,4 +1,4 @@
-from database.database import get_connection
+from database.database import open_connection
 from models.user import User
 
 
@@ -7,8 +7,8 @@ def _map(row) -> User:
     return User(*row)
 
 # получение списка всех пользователей системы 
-def get_all() -> list[User]:
-    conn = get_connection()
+def find_all_users() -> list[User]:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT u.user_id, u.login, u.password, u.user_role, r.name
@@ -21,8 +21,8 @@ def get_all() -> list[User]:
     return [_map(r) for r in rows]
 
 # ищет учетную запись по id
-def get_by_id(user_id: int) -> User | None:
-    conn = get_connection()
+def find_user_by_id(user_id: int) -> User | None:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT u.user_id, u.login, u.password, u.user_role, r.name
@@ -35,8 +35,8 @@ def get_by_id(user_id: int) -> User | None:
     return _map(row) if row else None
 
 # поиск по авторизации
-def get_by_login(login: str) -> User | None:
-    conn = get_connection()
+def find_user_by_login(login: str) -> User | None:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT u.user_id, u.login, u.password, u.user_role, r.name
@@ -49,8 +49,8 @@ def get_by_login(login: str) -> User | None:
     return _map(row) if row else None
 
 # создает новую учетную запись 
-def create(login: str, password: str, user_role: int) -> int:
-    conn = get_connection()
+def add_user(login: str, password: str, user_role: int) -> int:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         INSERT INTO users (login, password, user_role)
@@ -62,8 +62,8 @@ def create(login: str, password: str, user_role: int) -> int:
     return user_id
 
 # удаляет учетную запись 
-def delete(user_id: int):
-    conn = get_connection()
+def remove_user(user_id: int):
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         DELETE FROM users
@@ -71,4 +71,3 @@ def delete(user_id: int):
     """, (user_id,))
     conn.commit()
     conn.close()
-

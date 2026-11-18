@@ -1,4 +1,4 @@
-from database.database import get_connection
+from database.database import open_connection
 from models.user_role import UserRole
 
 
@@ -6,8 +6,8 @@ def _map(row) -> UserRole:
     return UserRole(*row)
 
 # делает запрос, чтобы извлечь все существующие роли из таблицы 
-def get_all() -> list[UserRole]:
-    conn = get_connection()
+def find_all_roles() -> list[UserRole]:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT user_role_id, name
@@ -19,8 +19,8 @@ def get_all() -> list[UserRole]:
     return [_map(r) for r in rows]
 
 # ищет в базе роль по её id
-def get_by_id(role_id: int) -> UserRole | None:
-    conn = get_connection()
+def find_role_by_id(role_id: int) -> UserRole | None:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT user_role_id, name

@@ -1,4 +1,4 @@
-from database.database import get_connection
+from database.database import open_connection
 from models.student import Student
 import sqlite3
 
@@ -7,8 +7,8 @@ def _map(row) -> Student:
     return Student(*row)
 
 
-def get_all() -> list[Student]:
-    conn = get_connection()
+def find_all_students() -> list[Student]:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT s.student_id, s.full_name, s.group_name, s.room_id, s.user_id,
@@ -23,8 +23,8 @@ def get_all() -> list[Student]:
     return [_map(r) for r in rows]
 
 # функция позволяет программе находить профиль студента по student_id 
-def get_by_id(student_id: int) -> Student | None:
-    conn = get_connection()
+def find_student_by_id(student_id: int) -> Student | None:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT s.student_id, s.full_name, s.group_name, s.room_id, s.user_id,
@@ -39,8 +39,8 @@ def get_by_id(student_id: int) -> Student | None:
     return _map(row) if row else None
 
 # функция позволяет программе находить профиль студента по user_id 
-def get_by_user_id(user_id: int) -> Student | None:
-    conn = get_connection()
+def find_student_by_user_id(user_id: int) -> Student | None:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT s.student_id, s.full_name, s.group_name, s.room_id, s.user_id,
@@ -55,8 +55,8 @@ def get_by_user_id(user_id: int) -> Student | None:
     return _map(row) if row else None
 
 # возвращает список студентов проживаюших в определенной комнате 
-def get_by_room_id(room_id: int) -> list[Student]:
-    conn = get_connection()
+def find_students_in_room(room_id: int) -> list[Student]:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT s.student_id, s.full_name, s.group_name, s.room_id, s.user_id,
@@ -72,8 +72,8 @@ def get_by_room_id(room_id: int) -> list[Student]:
     return [_map(r) for r in rows]
 
 # создает новую записб о студенте
-def create(full_name: str, group_name: str, room_id: int | None, user_id: int) -> int:
-    conn = get_connection()
+def add_student(full_name: str, group_name: str, room_id: int | None, user_id: int) -> int:
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         INSERT INTO students (full_name, group_name, room_id, user_id)
@@ -85,8 +85,8 @@ def create(full_name: str, group_name: str, room_id: int | None, user_id: int) -
     return student_id
 
 # меняет ФИО и группу студента 
-def update(student_id: int, full_name: str, group_name: str):
-    conn = get_connection()
+def update_student(student_id: int, full_name: str, group_name: str):
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         UPDATE students
@@ -97,8 +97,8 @@ def update(student_id: int, full_name: str, group_name: str):
     conn.close()
 
 # меняет привязку к комнате 
-def update_room(student_id: int, room_id: int | None):
-    conn = get_connection()
+def change_student_room(student_id: int, room_id: int | None):
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         UPDATE students
@@ -109,8 +109,8 @@ def update_room(student_id: int, room_id: int | None):
     conn.close()
 
 # удаление студента 
-def delete(student_id: int):
-    conn = get_connection()
+def remove_student(student_id: int):
+    conn = open_connection()
     cur = conn.cursor()
     cur.execute("""
         DELETE FROM students
@@ -120,8 +120,8 @@ def delete(student_id: int):
     conn.close()
 
 # возвращает всех студентов со связанными комнатами в виде словарей для экспорта
-def get_all_for_export() -> list[dict]:
-    conn = get_connection()
+def find_all_students_for_export() -> list[dict]:
+    conn = open_connection()
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
     cur.execute("""

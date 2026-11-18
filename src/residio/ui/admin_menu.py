@@ -1,12 +1,12 @@
 from models.user import User
 from services import room_service, student_service, export_service
-from ui.auth import add_admin, register_student
-from ui.utils import clear_screen, pause
+from ui.auth import show_add_admin_form, show_registration_form
+from ui.utils import clear_console, wait_for_enter
 
 
-def admin_menu(user: User):
+def show_admin_panel(user: User):
     while True:
-        clear_screen()
+        clear_console()
         print(f"===== Меню администратора ({user.login}) =====")
         print("1. Управление комнатами")
         print("2. Управление студентами и заселением")
@@ -16,28 +16,28 @@ def admin_menu(user: User):
 
         choice = input("Выберите действие: ").strip()
         if choice == "1":
-            rooms_menu()
+            show_rooms_panel()
         elif choice == "2":
-            students_menu()
+            show_students_panel()
         elif choice == "3":
-            clear_screen()
-            add_admin()
-            pause()
+            clear_console()
+            show_add_admin_form()
+            wait_for_enter()
         elif choice == "4":
-            clear_screen()
-            out_path = export_service.export_students_data()
+            clear_console()
+            out_path = export_service.save_students_data()
             print(f"Данные успешно сохранены в папку:\n{out_path}")
-            pause()
+            wait_for_enter()
         elif choice == "0":
             break
         else:
             print("Неверная команда, попробуйте снова.")
-            pause()
+            wait_for_enter()
 
 
-def rooms_menu():
+def show_rooms_panel():
     while True:
-        clear_screen()
+        clear_console()
         print("--- Управление комнатами ---")
         print("1. Список всех комнат")
         print("2. Список свободных комнат")
@@ -53,17 +53,17 @@ def rooms_menu():
 
         try:
             if choice == "1":
-                rooms = room_service.get_all_rooms()
+                rooms = room_service.list_all_rooms()
                 print("\nСписок всех комнат:")
                 for r in rooms:
-                    occupied = room_service.get_room_occupancy(r.room_id)
+                    occupied = room_service.count_residents_in_room(r.room_id)
                     print(
                         f"ID: {r.room_id} | Комната №{r.number} | "
                         f"Этаж: {r.floor} | Занято мест: {occupied}/{r.capacity}"
                     )
 
             elif choice == "2":
-                available = room_service.get_available_rooms()
+                available = room_service.list_rooms_with_free_spots()
                 if not available:
                     print("Свободных комнат нет.")
                 else:
@@ -76,8 +76,8 @@ def rooms_menu():
 
             elif choice == "3":
                 room_id = int(input("Введите ID комнаты: "))
-                room = room_service.get_room_by_id(room_id)
-                residents = student_service.get_students_in_room(room_id)
+                room = room_service.find_room_by_id(room_id)
+                residents = student_service.list_roommates(room_id)
                 print(f"\nЖильцы комнаты №{room.number}:")
                 if not residents:
                     print("В комнате никто не проживает.")
@@ -88,7 +88,7 @@ def rooms_menu():
                 number = int(input("Номер комнаты: "))
                 floor = int(input("Этаж: "))
                 capacity = int(input("Вместимость (чел.): "))
-                room_service.create_room(number, floor, capacity)
+                room_service.add_new_room(number, floor, capacity)
                 print(f"Комната №{number} успешно добавлена!")
 
             elif choice == "5":
@@ -96,12 +96,12 @@ def rooms_menu():
                 number = int(input("Новый номер комнаты: "))
                 floor = int(input("Новый этаж: "))
                 capacity = int(input("Новая вместимость: "))
-                room_service.update_room(room_id, number, floor, capacity)
+                room_service.edit_room_details(room_id, number, floor, capacity)
                 print("Данные комнаты обновлены!")
 
             elif choice == "6":
                 room_id = int(input("ID комнаты для удаления: "))
-                room_service.delete_room(room_id)
+                room_service.remove_room(room_id)
                 print("Комната удалена!")
 
             else:
@@ -112,12 +112,12 @@ def rooms_menu():
         except Exception as e:
             print(f"Ошибка: {e}")
 
-        pause()
+        wait_for_enter()
 
 
-def students_menu():
+def show_students_panel():
     while True:
-        clear_screen()
+        clear_console()
         print("--- Управление студентами ---")
         print("1. Список всех студентов")
         print("2. Зарегистрировать нового студента")
@@ -133,7 +133,7 @@ def students_menu():
 
         try:
             if choice == "1":
-                students = student_service.get_all_students()
+                students = student_service.list_all_students()
                 print("\nСписок студентов:")
                 for s in students:
                     room_info = f"Комната №{s.room_number}" if s.room_number else "Не заселён"
@@ -143,29 +143,29 @@ def students_menu():
                     )
 
             elif choice == "2":
-                register_student()
+                show_registration_form()
 
             elif choice == "3":
                 student_id = int(input("Введите ID студента: "))
                 room_number = int(input("Введите номер комнаты (например, 101): "))
-                student_service.assign_room(student_id, room_number)
+                student_service.move_student_to_room(student_id, room_number)
                 print("Студент успешно заселён!")
 
             elif choice == "4":
                 student_id = int(input("Введите ID студента для выселения: "))
-                student_service.evict_student(student_id)
+                student_service.remove_student_from_room(student_id)
                 print("Студент выселен из комнаты.")
 
             elif choice == "5":
                 student_id = int(input("Введите ID студента: "))
                 full_name = input("Новое ФИО: ")
                 group_name = input("Новая группа: ")
-                student_service.update_student_info(student_id, full_name, group_name)
+                student_service.edit_student_info(student_id, full_name, group_name)
                 print("Данные студента обновлены!")
 
             elif choice == "6":
                 student_id = int(input("Введите ID студента для удаления: "))
-                student_service.delete_student(student_id)
+                student_service.delete_student_account(student_id)
                 print("Студент и его учётная запись удалены.")
 
             else:
@@ -176,4 +176,4 @@ def students_menu():
         except Exception as e:
             print(f"Ошибка: {e}")
 
-        pause()
+        wait_for_enter()

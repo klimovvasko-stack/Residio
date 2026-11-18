@@ -7,7 +7,7 @@ SCHEMA_PATH = BASE_DIR / "schema.sql"
 DB_PATH = BASE_DIR / "residio.db"
 
 # выполняет все команды из schema.sql
-def init_db():
+def initialize_database():
     with open(SCHEMA_PATH, encoding="utf-8") as f:
         script = f.read()
 
@@ -19,7 +19,7 @@ def init_db():
         conn.close()
 
 # выводит на экран все строчки 
-def show_table(name):
+def display_table(name):
     conn = sqlite3.connect(DB_PATH)
     try:
         rows = conn.execute(f"SELECT * FROM {name}").fetchall()
@@ -32,8 +32,8 @@ def show_table(name):
 
 
 if __name__ == "__main__":
-    init_db() # создает и заполняет бд 
+    initialize_database() # создает и заполняет бд 
     for table in ("user_roles", "rooms", "users", "students"): 
-        show_table(table)
+        display_table(table)
 
 # python init_db.py

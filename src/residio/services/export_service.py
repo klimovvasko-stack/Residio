@@ -40,7 +40,7 @@ def _dict_to_xml(parent: ET.Element, data: Any, item_tag: str = "item") -> None:
         parent.text = str(data)
 
 
-def export_records(
+def save_records_to_files(
     records: list[dict[str, Any]],
     root_tag: str = "records",
     item_tag: str = "record",
@@ -84,6 +84,6 @@ def export_records(
     return out_dir
 
 
-def export_students_data() -> Path:
-    data = student_repository.get_all_for_export()
-    return export_records(data, root_tag="students", item_tag="student")    
+def save_students_data() -> Path:
+    data = student_repository.find_all_students_for_export()
+    return save_records_to_files(data, root_tag="students", item_tag="student")

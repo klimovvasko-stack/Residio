@@ -1,11 +1,11 @@
 from models.user import User
 from services import student_service, room_service
-from ui.utils import clear_screen, pause
+from ui.utils import clear_console, wait_for_enter
 
 
-def student_menu(user: User):
+def show_student_panel(user: User):
     while True:
-        clear_screen()
+        clear_console()
         print(f"===== Личный кабинет студента ({user.login}) =====")
         print("1. Мой профиль и комната")
         print("2. Мои соседи по комнате")
@@ -18,7 +18,7 @@ def student_menu(user: User):
 
         try:
             if choice == "1":
-                student = student_service.get_student_by_user_id(user.user_id)
+                student = student_service.find_student_by_user_id(user.user_id)
                 room_str = f"Комната №{student.room_number}" if student.room_number else "Пока не заселён"
                 print("\n--- Мои данные ---")
                 print(f"ФИО:    {student.full_name}")
@@ -26,18 +26,18 @@ def student_menu(user: User):
                 print(f"Статус: {room_str}")
 
             elif choice == "2":
-                student = student_service.get_student_by_user_id(user.user_id)
+                student = student_service.find_student_by_user_id(user.user_id)
                 if not student.room_id:
                     print("Вы пока не заселены ни в одну комнату.")
                 else:
-                    residents = student_service.get_students_in_room(student.room_id)
+                    residents = student_service.list_roommates(student.room_id)
                     print(f"\nПроживающие в комнате №{student.room_number}:")
                     for r in residents:
                         you_mark = " (Вы)" if r.student_id == student.student_id else ""
                         print(f"- {r.full_name} (гр. {r.group_name}){you_mark}")
 
             elif choice == "3":
-                available = room_service.get_available_rooms()
+                available = room_service.list_rooms_with_free_spots()
                 if not available:
                     print("Свободных мест в общежитии сейчас нет.")
                 else:
@@ -54,4 +54,4 @@ def student_menu(user: User):
         except Exception as e:
             print(f"Ошибка: {e}")
 
-        pause()
+        wait_for_enter()
